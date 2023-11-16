@@ -11,53 +11,42 @@
     </nav>
 
     <div class="task-container">
-      <Card :isDefined="false"/>
-      <Card title="Task 1" text="Some text" createdAt="2022-01-01" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
-      <Card title="Task 1" text="Some text" />
+      <Card
+        v-for="task in taskList"
+        :key="task.id"
+        :text="task.description"
+        :isCompleted="task.completed"
+        :createdAt="task.createdAt"
+      />
+      <Card
+        text="Some text 222"
+        createdAt="2022-01-01"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Card from './components/common/Card/Card.vue';
+import { mapState, mapActions } from 'pinia';
+import { useTodoStore } from '@/stores/index';
+
 export default {
   name: 'App',
   components: {
     Card
+  },
+
+  created() {
+    this.fetchTaskList();
+  },
+
+  methods: {
+    ...mapActions(useTodoStore, ['fetchTaskList'])
+  },
+
+  computed: {
+    ...mapState(useTodoStore, ['taskList']),
   }
 }
 </script>
@@ -74,6 +63,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+  padding-bottom: 1rem;
 }
 
 nav {

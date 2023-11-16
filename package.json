@@ -2,7 +2,6 @@
   "name": "todo",
   "version": "0.0.0",
   "author": "all123all",
-
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -14,13 +13,12 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
-
   "dependencies": {
+    "axios": "^1.6.2",
     "pinia": "^2.0.16",
     "vue": "^2.7.7",
     "vue-router": "^3.5.4"
   },
-
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/jsdom": "^16.2.14",

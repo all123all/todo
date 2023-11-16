@@ -14,6 +14,7 @@ export const useTodoStore = defineStore({
   actions: {
     async fetchTaskList() {
       const { data } = await api.get('/tasks')
+      console.log('fetchTaskList from store', data)
       this.taskList = data
     },
   }
