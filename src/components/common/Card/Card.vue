@@ -60,24 +60,35 @@
 </template>
 
 <script lang="ts">
+import { mapActions } from 'pinia';
+import { useTodoStore } from '@/stores/index';
+
 	export default {
 		name: 'Card',
-		props: {
-			text: {
-				type: String,
-				default: ''
-			},
-			createdAt: {
-				type: String,
-				default: ''
-			},
-			isCompleted: {
-				type: Boolean,
-				default: false
-			}
-		},
+		props: ['text', 'createdAt', 'isCompleted', 'id'] as any,
+    //{
+//		text: {
+//			type: String,
+//			default: ''
+//		},
+//		createdAt: {
+//			type: String,
+//			default: ''
+//		},
+//		isCompleted: {
+//			type: Boolean,
+//			default: false
+//		},
+//		id: {
+//			type: String,
+//			default: ''
+//		}
+//	},
 
-		data() {
+    data(): {
+      inputText: string
+      completedTask: boolean
+    } {
 			return {
 				inputText: this.text as string || '',
 				completedTask: this.isCompleted as boolean || false
@@ -90,14 +101,23 @@
 			},
 
 			formattedCreatedAt(): string {
+        if (!this.createdAt)
+          return ''
+
 				return new Date(this.createdAt).toLocaleString()
 			}
 		},
 
 		methods: {
+			...mapActions(useTodoStore, ['removeTask', 'addTask', 'updateTask']),
+
 			deleteTask(): void {
-				// Implement delete task logic
-				console.log('delete task')
+				let task = {
+					description: this.inputText,
+					completed: this.completedTask,
+					id: this.id
+				}
+				this.removeTask(task)
 			},
 
 			updateTaskCompletion(): void {

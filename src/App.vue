@@ -5,8 +5,9 @@
         <router-link to="/">Home</router-link>
         <router-link to="/about">About</router-link>
       </div>
+
       <div>
-        <button class="btn btn-primary mx-2">Add new task</button>
+        <button @click="addNewTask" class="btn btn-primary mx-2">Add new task</button>
       </div>
     </nav>
 
@@ -17,32 +18,33 @@
         :text="task.description"
         :isCompleted="task.completed"
         :createdAt="task.createdAt"
-      />
-      <Card
-        text="Some text 222"
-        createdAt="2022-01-01"
+        :id="task.id"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Card from './components/common/Card/Card.vue';
-import { mapState, mapActions } from 'pinia';
-import { useTodoStore } from '@/stores/index';
+import Card from '@/components/common/Card/Card.vue'
+import { mapState, mapActions } from 'pinia'
+import { useTodoStore } from '@/stores/index'
 
 export default {
   name: 'App',
   components: {
-    Card
+    Card,
   },
 
   created() {
+    //@ts-ignore
     this.fetchTaskList();
   },
 
   methods: {
-    ...mapActions(useTodoStore, ['fetchTaskList'])
+    ...mapActions(useTodoStore, ['fetchTaskList']),
+
+    addNewTask() {
+    }
   },
 
   computed: {
