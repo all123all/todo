@@ -5,103 +5,46 @@
         <router-link to="/">Home</router-link>
         <router-link to="/about">About</router-link>
       </div>
-
-
-      <BaseModal :isOpen="isOpen" @closeModal="isOpen = false"/>
-      <div>
-        <button @click="isOpen = true" class="btn btn-primary mx-2">Add new task</button>
-      </div>
+        <BaseModal :isOpen="isOpen" @closeModal="isOpen = false"/>
+        <button
+          v-if="$route.path === '/'"
+          @click="isOpen = true"
+          class="btn btn-primary mx-2"
+        >
+          Add new task
+        </button>
     </nav>
-
-    <div class="task-container">
-      <Card
-        v-for="task in taskList"
-        :key="task.id"
-        :text="task.description"
-        :isCompleted="task.completed"
-        :createdAt="task.createdAt"
-        :id="task.id"
-      />
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import Card from '@/components/common/Card/Card.vue'
-import BaseModal from './components/common/Modals/BaseModal.vue'
-import { mapState, mapActions } from 'pinia'
-import { useTodoStore } from '@/stores/index'
+import BaseModal from '@/components/common/Modals/BaseModal.vue'
 
 export default {
   name: 'App',
+  components: {
+    BaseModal,
+  },
 
   data() {
     return {
       isOpen: false
     }
   },
-
-  components: {
-    Card,
-    BaseModal
-  },
-
-  created() {
-    //@ts-ignore
-    this.fetchTaskList();
-  },
-
-  methods: {
-    ...mapActions(useTodoStore, ['fetchTaskList']),
-
-    addNewTask() {
-    }
-  },
-
-  computed: {
-    ...mapState(useTodoStore, ['taskList']),
-  }
 }
 </script>
 
 <style>
 #app {
-  position: relative;
   width: 100%;
   height: 100vh;
-}
-
-.task-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  padding-bottom: 1rem;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
-  width: 100%;
   padding: 1rem 0;
   margin: 1rem 0;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 </style>

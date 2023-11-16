@@ -10,18 +10,24 @@
 				name=""
 				id=""
 				rows="10"
+        :disabled="isLoading"
 			/>
 
-      <div class="d-flex justify-content-end gap-2">
-        <button @click="closeModal" class="btn btn-outline-danger">Cancel</button>
-        <button @click="resolveAddTask" class="btn btn-primary">Save task</button>
+      <div class="d-flex justify-content-end gap-4 align-items-center w-100">
+        <div class="text-danger text-start">
+          <span v-if="inputText === ''" class="text-danger">You can't create an empty task</span>
+        </div>
+        <div class="d-flex gap-2">
+          <button @click="closeModal" :disabled="isLoading" class="btn btn-outline-danger">Cancel</button>
+          <button @click="resolveAddTask" :disabled="isLoading" class="btn btn-primary">Save task</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { mapActions } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import { useTodoStore } from '@/stores/index';
 
 export default {
@@ -37,6 +43,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState(useTodoStore, ['isLoading']),
+  },
+
   methods: {
 		...mapActions(useTodoStore, ['addTask']),
 
@@ -49,6 +59,7 @@ export default {
         return
 
       this.addTask(this.inputText)
+      this.inputText = ''
       this.closeModal()
     }
   },

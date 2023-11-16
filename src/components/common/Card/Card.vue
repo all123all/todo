@@ -120,9 +120,14 @@ import { useTodoStore } from '@/stores/index';
 			},
 
 			updateTaskCompletion(): void {
-				// Implement update task completion logic
 				this.completedTask = !this.completedTask
-				console.log('update task completion', this.completedTask)
+
+				let task = {
+					description: this.inputText,
+					completed: this.completedTask,
+					id: this.id
+				}
+        this.updateTask(task)
 			},
 
 			resolveUpdateTask(): void {
@@ -135,7 +140,6 @@ import { useTodoStore } from '@/stores/index';
 					id: this.id
 				}
         this.updateTask(task)
-				console.log('update task', this.inputText)
 			}
 		}
 	};

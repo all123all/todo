@@ -23,7 +23,12 @@ export const useTodoStore = defineStore({
     async fetchTaskList(): Promise<void> {
       try {
         this.isLoading = true
-        const { data } = await api.get('/tasks')
+        const { data } = await api.get('/tasks', {
+          params: {
+            sortBy: 'completed',
+            order: 'desc'
+          }
+        })
         this.taskList = data
       } catch (error) {
         console.error(error)
