@@ -6,8 +6,10 @@
         <router-link to="/about">About</router-link>
       </div>
 
+
+      <BaseModal :isOpen="isOpen" @closeModal="isOpen = false"/>
       <div>
-        <button @click="addNewTask" class="btn btn-primary mx-2">Add new task</button>
+        <button @click="isOpen = true" class="btn btn-primary mx-2">Add new task</button>
       </div>
     </nav>
 
@@ -26,13 +28,22 @@
 
 <script lang="ts">
 import Card from '@/components/common/Card/Card.vue'
+import BaseModal from './components/common/Modals/BaseModal.vue'
 import { mapState, mapActions } from 'pinia'
 import { useTodoStore } from '@/stores/index'
 
 export default {
   name: 'App',
+
+  data() {
+    return {
+      isOpen: false
+    }
+  },
+
   components: {
     Card,
+    BaseModal
   },
 
   created() {

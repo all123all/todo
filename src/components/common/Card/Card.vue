@@ -29,7 +29,7 @@
 			<span class="text-muted align-self-center">{{ formattedCreatedAt }}</span>
 
 			<div class="btn-group">
-				<button type="button" class="btn btn-secondary" @click="updateTask">Update</button>
+				<button type="button" class="btn btn-secondary" @click="resolveUpdateTask">Update</button>
 				<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
 					<span class="visually-hidden">Toggle Dropdown</span>
 				</button>
@@ -37,7 +37,7 @@
 					<li>
 						<span
 							class="dropdown-item text-primary"
-							@click="updateTask"
+							@click="resolveUpdateTask"
 							style="cursor: pointer"
 						>
 							Update this task
@@ -65,25 +65,24 @@ import { useTodoStore } from '@/stores/index';
 
 	export default {
 		name: 'Card',
-		props: ['text', 'createdAt', 'isCompleted', 'id'] as any,
-    //{
-//		text: {
-//			type: String,
-//			default: ''
-//		},
-//		createdAt: {
-//			type: String,
-//			default: ''
-//		},
-//		isCompleted: {
-//			type: Boolean,
-//			default: false
-//		},
-//		id: {
-//			type: String,
-//			default: ''
-//		}
-//	},
+    props: {
+    text: {
+      type: String,
+      default: ''
+    },
+    createdAt: {
+      type: String,
+      default: ''
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false
+    },
+    id: {
+      type: String,
+      default: ''
+    }
+  },
 
     data(): {
       inputText: string
@@ -109,7 +108,7 @@ import { useTodoStore } from '@/stores/index';
 		},
 
 		methods: {
-			...mapActions(useTodoStore, ['removeTask', 'addTask', 'updateTask']),
+			...mapActions(useTodoStore, ['removeTask', 'updateTask']),
 
 			deleteTask(): void {
 				let task = {
@@ -126,8 +125,16 @@ import { useTodoStore } from '@/stores/index';
 				console.log('update task completion', this.completedTask)
 			},
 
-			updateTask(): void {
-				// Implement update task logic
+			resolveUpdateTask(): void {
+        if(this.inputText === this.text)
+          return
+
+				let task = {
+					description: this.inputText,
+					completed: this.completedTask,
+					id: this.id
+				}
+        this.updateTask(task)
 				console.log('update task', this.inputText)
 			}
 		}

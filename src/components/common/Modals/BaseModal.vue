@@ -1,11 +1,80 @@
 <template>
-	<div>
-		<h1>Base Modal here...</h1>
-	</div>
+  <div v-if="isOpen" id="myModal" class="modal">
+    <div class="modal-content">
+      <h5 class="text-dark">Create new task</h5>
+			<textarea
+				v-model="inputText"
+				placeholder="Write your task here"
+				class="card-text w-100 mb-3"
+				style="resize: none"
+				name=""
+				id=""
+				rows="10"
+			/>
+
+      <div class="d-flex justify-content-end gap-2">
+        <button @click="closeModal" class="btn btn-outline-danger">Cancel</button>
+        <button @click="resolveAddTask" class="btn btn-primary">Save task</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
+import { mapActions } from 'pinia';
+import { useTodoStore } from '@/stores/index';
+
 export default {
 	name: 'BaseModal',
+
+  props: {
+    isOpen: Boolean,
+  },
+
+  data() {
+    return {
+      inputText: '',
+    }
+  },
+
+  methods: {
+		...mapActions(useTodoStore, ['addTask']),
+
+    closeModal() {
+      this.$emit('closeModal')
+    },
+
+    resolveAddTask() {
+      if(this.inputText === '')
+        return
+
+      this.addTask(this.inputText)
+      this.closeModal()
+    }
+  },
 };
 </script>
+
+<style>
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+</style>

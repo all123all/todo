@@ -44,11 +44,11 @@ export const useTodoStore = defineStore({
       }
     },
 
-    async addTask(task: TaskModel): Promise<void> {
+    async addTask(description: string): Promise<void> {
       try {
         this.isLoading = true
         await api.post('/tasks', {
-          "description": task.description,
+          "description": description,
           "completed": false
         })
         this.fetchTaskList()
