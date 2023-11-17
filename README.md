@@ -1,5 +1,10 @@
 # todo
 
+Before running the project create a .env file with the following contents:
+```sh
+VITE_API_URL=https://XXXXXX.mockapi.io/api/v1/
+```
+
 ## Project Setup
 
 ```sh
@@ -18,7 +23,7 @@ npm run dev
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Run Unit Tests with Vitest
 
 ```sh
 npm run test:unit

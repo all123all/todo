@@ -47,4 +47,8 @@ nav {
   padding: 1rem 0;
   margin: 1rem 0;
 }
+
+nav a {
+  margin: 0 .3rem;
+}
 </style>

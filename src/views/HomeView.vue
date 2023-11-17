@@ -12,11 +12,11 @@
     </div>
 
     <div
+      v-if="isLoading"
       class="alert alert-primary position-absolute bottom-0 start-50 translate-middle-x"
       style="width: 350px;"
-      role="alert"
     >
-      A simple primary alert—check it out!
+      Loading. Please wait...
     </div>
   </div>
 </template>
@@ -53,45 +53,24 @@ export default {
   },
 
   computed: {
-    ...mapState(useTodoStore, ['taskList']),
+    ...mapState(useTodoStore, ['taskList', 'isLoading']),
   }
 }
 </script>
 
 <style>
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 80vh;
+}
+
 .task-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   padding-bottom: 1rem;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1rem 0;
-  margin: 1rem 0;
-  top: 0;
-  right: 0;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
 }
 </style>
